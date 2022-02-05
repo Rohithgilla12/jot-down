@@ -3,8 +3,8 @@
   windows_subsystem = "windows"
 )]
 
-use tauri::{CustomMenuItem, SystemTrayMenu, SystemTrayMenuItem, Manager, SystemTrayEvent};
-use tauri_plugin_positioner::{Positioner, Position, WindowExt, on_tray_event};
+use tauri::{CustomMenuItem, Manager, SystemTrayEvent, SystemTrayMenu, SystemTrayMenuItem};
+use tauri_plugin_positioner::{on_tray_event, Position, Positioner, WindowExt};
 
 fn main() {
   let quit = CustomMenuItem::new("quit".to_string(), "Quit");
@@ -23,13 +23,10 @@ fn main() {
     .plugin(Positioner::default())
     .setup(|app| {
       let win = app.get_window("main").unwrap();
-      let _ = win.set_always_on_top(true);
       let _ = win.set_decorations(false);
-      
-
 
       tauri::async_runtime::spawn(async move {
-        let _ = win.move_window(Position::TopRight);
+        let _ = win.move_window(Position::TrayCenter);
       });
 
       Ok(())
@@ -45,7 +42,6 @@ fn main() {
         } else {
           win.show().unwrap();
           win.set_focus().unwrap();
-          // win.show_window_as_active().unwrap();
           let _ = win.move_window(Position::TrayCenter);
         }
       }
