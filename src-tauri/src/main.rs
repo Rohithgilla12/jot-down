@@ -24,13 +24,13 @@ fn main() {
     .setup(|app| {
       let win = app.get_window("main").unwrap();
       let _ = win.set_always_on_top(true);
+      let _ = win.set_decorations(false);
       
+
 
       tauri::async_runtime::spawn(async move {
         let _ = win.move_window(Position::TopRight);
       });
-
-
 
       Ok(())
     })
