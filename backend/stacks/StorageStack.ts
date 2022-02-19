@@ -30,7 +30,7 @@ export default class StorageStack extends sst.Stack {
       },
     });
 
-    this.table = new sst.Table(this, "Notes", {
+    this.table = new sst.Table(this, "just-jot", {
       fields: {
         uid: sst.TableFieldType.STRING,
         noteId: sst.TableFieldType.STRING,
@@ -38,6 +38,11 @@ export default class StorageStack extends sst.Stack {
       primaryIndex: {
         partitionKey: "uid",
         sortKey: "noteId",
+      },
+      globalIndexes: {
+        uid: {
+          partitionKey: "uid",
+        },
       },
     });
 
