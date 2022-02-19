@@ -1,0 +1,7 @@
+type Mutation {
+  createTodo: String!
+}
+
+type Query {
+  getTodos: String!
+}
