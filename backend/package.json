@@ -17,13 +17,11 @@
   "devDependencies": {
     "@tsconfig/node14": "^1.0.1",
     "@types/aws-lambda": "^8.10.70",
-    "@types/node": "<15.0.0",
-    "prisma": "^3.9.2"
+    "@types/node": "<15.0.0"
   },
   "dependencies": {
     "@pothos/core": "^3.3.2",
     "@pothos/plugin-simple-objects": "^3.0.3",
-    "@prisma/client": "^3.9.2",
     "@serverless-stack/cli": "0.65.2",
     "@serverless-stack/resources": "0.65.2",
     "apollo-server-lambda": "^3.6.3",
