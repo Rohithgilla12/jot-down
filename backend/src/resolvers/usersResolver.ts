@@ -18,13 +18,14 @@ builder.queryField("getUser", (t) =>
   t.field({
     type: User,
     nullable: true,
-    args: { uid: t.arg.id() },
+    args: { uid: t.arg.string({ required: true }) },
     resolve: async (_, args) => {
       if (process.env.TABLE_NAME) {
         const result = await dynamodb.get({
           TableName: process.env.TABLE_NAME,
           Key: {
             uid: args.uid,
+            sk: "profile",
           },
         });
 
@@ -56,6 +57,7 @@ builder.mutationField("createUser", (t) =>
           profileImage: args.profileImage,
           createdAt: new Date().toISOString(),
           updatedAt: null,
+          sk: "profile",
         };
         const result = await dynamodb.put({
           TableName: process.env.TABLE_NAME,

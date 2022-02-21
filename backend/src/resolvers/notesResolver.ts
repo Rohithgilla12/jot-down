@@ -5,7 +5,7 @@ const Note = builder.simpleObject("Note", {
   description:
     "The Note object with title, note, noteId, uid, createdAt, updatedAt",
   fields: (t) => ({
-    noteId: t.id(),
+    sk: t.id(),
     uid: t.string(),
     title: t.string({ nullable: true }),
     note: t.string({ nullable: true }),
@@ -25,7 +25,7 @@ builder.queryField("getNote", (t) =>
           TableName: process.env.TABLE_NAME,
           Key: {
             uid: "rgilla",
-            noteId: args.noteId,
+            sk: args.noteId,
           },
         });
 
@@ -58,7 +58,7 @@ builder.mutationField("createNote", (t) =>
           title: args.title,
           note: args.note,
           uid: args.uid,
-          noteId: noteId,
+          sk: noteId,
           createdAt: new Date().toISOString(),
           updatedAt: null,
         };

@@ -8,7 +8,7 @@ type Mutation {
 type Note {
   createdAt: String!
   note: String
-  noteId: ID!
+  sk: ID!
   title: String
   uid: String!
   updatedAt: String
@@ -17,7 +17,7 @@ type Note {
 type Query {
   getNote(noteId: String!): Note
   getTodos: String!
-  getUser(uid: ID): User
+  getUser(uid: String!): User
 }
 
 """
