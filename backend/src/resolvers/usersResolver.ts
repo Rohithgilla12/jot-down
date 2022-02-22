@@ -7,7 +7,7 @@ const User = builder.simpleObject("User", {
   fields: (t) => ({
     name: t.string({ nullable: true }),
     email: t.string(),
-    uid: t.id(),
+    uid: t.string(),
     createdAt: t.string({}),
     updatedAt: t.string({ nullable: true }),
     profileImage: t.string({ nullable: true }),
@@ -32,8 +32,15 @@ builder.queryField("getUser", (t) =>
         if (!result.Item) {
           throw new Error("User not found");
         }
-        const user: any = result.Item;
-        return user;
+
+        return {
+          email: result.Item.email,
+          name: result.Item.name,
+          createdAt: result.Item.createdAt,
+          updatedAt: result.Item.updatedAt,
+          profileImage: result.Item.profileImage,
+          uid: result.Item.uid,
+        };
       }
     },
   })

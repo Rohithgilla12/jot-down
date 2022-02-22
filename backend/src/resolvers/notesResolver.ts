@@ -5,7 +5,7 @@ const Note = builder.simpleObject("Note", {
   description:
     "The Note object with title, note, noteId, uid, createdAt, updatedAt",
   fields: (t) => ({
-    sk: t.id(),
+    id: t.string(),
     uid: t.string(),
     title: t.string({ nullable: true }),
     note: t.string({ nullable: true }),
@@ -18,22 +18,29 @@ builder.queryField("getNote", (t) =>
   t.field({
     type: Note,
     nullable: true,
-    args: { noteId: t.arg.string({ required: true }) },
+    args: { id: t.arg.string({ required: true }) },
     resolve: async (_, args) => {
       if (process.env.TABLE_NAME) {
         const result = await dynamodb.get({
           TableName: process.env.TABLE_NAME,
           Key: {
             uid: "rgilla",
-            sk: args.noteId,
+            sk: args.id,
           },
         });
 
         if (!result.Item) {
           throw new Error("Note not found");
         }
-        const note: any = result.Item;
-        return note;
+
+        return {
+          id: result.Item.sk,
+          uid: result.Item.uid,
+          title: result.Item.title,
+          note: result.Item.note,
+          createdAt: result.Item.createdAt,
+          updatedAt: result.Item.updatedAt,
+        };
       }
     },
   })
@@ -43,6 +50,7 @@ builder.queryField("getNote", (t) =>
 builder.mutationField("createNote", (t) =>
   t.field({
     type: Note,
+    nullable: true,
     args: {
       title: t.arg.string({}),
       note: t.arg.string({ required: true }),
@@ -54,7 +62,7 @@ builder.mutationField("createNote", (t) =>
         const noteId =
           Math.random().toString(36).substring(2, 15) +
           Math.random().toString(36).substring(2, 15);
-        const note: any = {
+        const note = {
           title: args.title,
           note: args.note,
           uid: args.uid,
@@ -70,42 +78,15 @@ builder.mutationField("createNote", (t) =>
         if (result.$response.error) {
           throw new Error("Not able to create note");
         }
-        return note;
+        return {
+          title: args.title,
+          note: args.note,
+          uid: args.uid,
+          id: noteId,
+          createdAt: new Date().toISOString(),
+          updatedAt: null,
+        } as any;
       }
     },
   })
 );
-
-// builder.mutationField("updateNote", (t) =>
-// t.field({
-//     type: Note,
-//     args: {
-//     noteId: t.arg.id(),
-//     title: t.arg.string({}),
-//     note: t.arg.string({}),
-//     uid: t.arg.string({}),
-//     },
-//     resolve: async (_, args) => {
-//     if (process.env.TABLE_NAME) {
-//         const note: any = {
-//         title: args.title,
-//         note: args.note,
-//         uid: args.uid,
-//         createdAt: new Date().toISOString(),
-//         updatedAt: new Date().toISOString(),
-//         };
-//         const result = await dynamodb.update({
-//         TableName: process.env.TABLE_NAME,
-//         Key: {
-//             uid: "rgilla",
-//             noteId: args.noteId,
-//         },
-//         UpdateExpression:
-//             "set title = :title, note = :note, updatedAt = :updatedAt",
-//         ExpressionAttributeValues: {
-//             ":title": args.title,
-//             ":note": args.note,
-//             ":updatedAt": new Date().toISOString(),
-//         },
-
-//         });

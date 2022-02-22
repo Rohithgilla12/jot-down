@@ -1,5 +1,5 @@
 type Mutation {
-  createNote(note: String!, title: String, uid: String!): Note!
+  createNote(note: String!, title: String, uid: String!): Note
   createTodo: String!
   createUser(email: String!, name: String, profileImage: String, uid: ID!): User!
 }
@@ -7,15 +7,15 @@ type Mutation {
 """The Note object with title, note, noteId, uid, createdAt, updatedAt"""
 type Note {
   createdAt: String!
+  id: String!
   note: String
-  sk: ID!
   title: String
   uid: String!
   updatedAt: String
 }
 
 type Query {
-  getNote(noteId: String!): Note
+  getNote(id: String!): Note
   getTodos: String!
   getUser(uid: String!): User
 }
@@ -28,6 +28,6 @@ type User {
   email: String!
   name: String
   profileImage: String
-  uid: ID!
+  uid: String!
   updatedAt: String
 }
