@@ -42,7 +42,7 @@ export default class StorageStack extends sst.Stack {
     });
 
     this.addOutputs({
-      bucket: this.bucket.bucketArn,
+      bucket: this.bucket.bucketName,
       table: this.table.tableArn,
     });
   }
