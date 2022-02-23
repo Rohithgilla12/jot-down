@@ -1,13 +1,15 @@
 import { Route, Switch } from "react-router";
+import { SignIn } from "./pages/SignIn";
+import { SignUp } from "./pages/SignUp";
 
 export const Routes = () => {
   return (
     <Switch>
-      <Route path="/about">
-        <About />
+      <Route path="/sign_up">
+        <SignUp />
       </Route>
-      <Route path="/users">
-        <Users />
+      <Route path="/sign_in">
+        <SignIn />
       </Route>
       <Route path="/">
         <Home />
@@ -18,12 +20,4 @@ export const Routes = () => {
 
 function Home() {
   return <h2>Home</h2>;
-}
-
-function About() {
-  return <h2>About</h2>;
-}
-
-function Users() {
-  return <h2>Users</h2>;
 }

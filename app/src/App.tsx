@@ -1,10 +1,15 @@
 import { Auth } from "aws-amplify";
+import { useAtom } from "jotai";
 import { useEffect } from "react";
-import { Link, Route, Switch } from "react-router-dom";
+import { Link } from "react-router-dom";
 import "./App.css";
+import Navigation from "./components/Navigation";
 import { Routes } from "./Routes";
+import { authenticatedAtom } from "./state/authState";
 
 export default function App() {
+  const [_, setAuthenticated] = useAtom(authenticatedAtom);
+
   useEffect(() => {
     onLoad();
   }, []);
@@ -12,6 +17,7 @@ export default function App() {
   async function onLoad() {
     try {
       await Auth.currentSession();
+      setAuthenticated(true);
 
       console.log("You are logged in!");
     } catch (e) {
@@ -19,24 +25,12 @@ export default function App() {
         alert(e);
       }
     }
-    console.log("You are not logged in!");
+    setAuthenticated(false);
   }
 
   return (
     <div>
-      <nav>
-        <ul>
-          <li>
-            <Link to="/">Home</Link>
-          </li>
-          <li>
-            <Link to="/about">About</Link>
-          </li>
-          <li>
-            <Link to="/users">Users</Link>
-          </li>
-        </ul>
-      </nav>
+      <Navigation />
 
       <Routes />
     </div>
