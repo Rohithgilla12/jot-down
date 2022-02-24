@@ -12,9 +12,7 @@ export default function main(app: sst.App): void {
   // Add more stacks
   const storageStack = new StorageStack(app, "storage");
 
-  const api = new ApiStack(app, "api", {
-    table: storageStack.table,
-  });
+  const api = new ApiStack(app, "api");
 
   if (api.api) {
     new AuthStack(app, "auth", {

@@ -10,24 +10,20 @@ export default class ApiStack extends sst.Stack {
 
   constructor(app: sst.App, id: string, props?: ApiStackProps) {
     super(app, id, props);
-    if (props) {
-      const { table } = props;
+    this.api = new sst.GraphQLApi(this, "Api", {
+      server: "src/lambda.handler",
+      defaultFunctionProps: {
+        // environment: {
+        //   TABLE_NAME: table.dynamodbTable.tableName,
+        // },
+      },
+    });
 
-      this.api = new sst.GraphQLApi(this, "Api", {
-        server: "src/lambda.handler",
-        defaultFunctionProps: {
-          environment: {
-            TABLE_NAME: table.dynamodbTable.tableName,
-          },
-        },
-      });
+    // this.api.attachPermissions([table]);
 
-      this.api.attachPermissions([table]);
-
-      // Show end point url in the console
-      this.addOutputs({
-        ApiEndpoint: this.api.url,
-      });
-    }
+    // Show end point url in the console
+    this.addOutputs({
+      ApiEndpoint: this.api.url,
+    });
   }
 }

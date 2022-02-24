@@ -6,7 +6,7 @@ export default class StorageStack extends sst.Stack {
   public readonly bucket: sst.Bucket;
 
   // Reference to the dynamodb table
-  public readonly table: sst.Table;
+  // public readonly table: sst.Table;
 
   constructor(app: sst.App, id: string, props?: sst.StackProps) {
     super(app, id, props);
@@ -30,20 +30,20 @@ export default class StorageStack extends sst.Stack {
       },
     });
 
-    this.table = new sst.Table(this, "just-jot", {
-      fields: {
-        uid: sst.TableFieldType.STRING,
-        sk: sst.TableFieldType.STRING,
-      },
-      primaryIndex: {
-        partitionKey: "uid",
-        sortKey: "sk",
-      },
-    });
+    // this.table = new sst.Table(this, "just-jot", {
+    //   fields: {
+    //     uid: sst.TableFieldType.STRING,
+    //     sk: sst.TableFieldType.STRING,
+    //   },
+    //   primaryIndex: {
+    //     partitionKey: "uid",
+    //     sortKey: "sk",
+    //   },
+    // });
 
     this.addOutputs({
       bucket: this.bucket.bucketName,
-      table: this.table.tableArn,
+      // table: this.table.tableArn,
     });
   }
 }

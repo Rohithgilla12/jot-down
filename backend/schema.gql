@@ -1,33 +1,40 @@
-type Mutation {
-  createNote(note: String!, title: String, uid: String!): Note
-  createTodo: String!
-  createUser(email: String!, name: String, profileImage: String, uid: ID!): User!
+type CreateNoteResult {
+  note: Note!
 }
 
-"""The Note object with title, note, noteId, uid, createdAt, updatedAt"""
+scalar DateTime
+
+type Mutation {
+  createNote(authorId: Int!, content: String, title: String!): CreateNoteResult!
+  createUser(email: String!, uid: String!): User!
+}
+
 type Note {
-  createdAt: String!
-  id: String!
-  note: String
+  author: User!
+  content: String
+  id: ID!
   title: String
-  uid: String!
-  updatedAt: String
+}
+
+type Profile {
+  bio: String
+  id: ID!
+  user: User!
+  userId: ID!
 }
 
 type Query {
-  getNote(id: String!): Note
-  getTodos: String!
-  getUser(uid: String!): User
+  note(id: String!): Note
+  notes(skip: Int, take: Int): [Note!]!
+  profile(id: String!): Profile
+  user(id: String!): User
 }
 
-"""
-The User object with name, email, uid, createdAt, updatedAt, profileImage
-"""
 type User {
-  createdAt: String!
   email: String!
+  id: ID!
   name: String
-  profileImage: String
-  uid: String!
-  updatedAt: String
+  notes: [Note!]!
+  notesCount: Int!
+  profile: Profile
 }

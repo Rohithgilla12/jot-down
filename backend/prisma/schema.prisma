@@ -10,6 +10,11 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+generator pothos {
+  provider = "prisma-pothos-types"
+  output   = "./generated.d.ts"
+}
+
 model Note {
   id        Int      @id @default(autoincrement())
   createdAt DateTime @default(now())
@@ -18,17 +23,17 @@ model Note {
   content   String?
   author    User     @relation(fields: [authorId], references: [id])
   authorId  Int
-  folderId  Int
-  Folder    Folder   @relation("FolderNotes", fields: [folderId], references: [id])
+  // folderId  Int
+  // Folder    Folder   @relation("FolderNotes", fields: [folderId], references: [id])
 }
 
-model Folder {
-  id        Int      @id @default(autoincrement())
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  name      String   @db.VarChar(255)
-  notes     Note[]   @relation(name: "FolderNotes")
-}
+// model Folder {
+//   id        Int      @id @default(autoincrement())
+//   createdAt DateTime @default(now())
+//   updatedAt DateTime @updatedAt
+//   name      String   @db.VarChar(255)
+//   notes     Note[]   @relation(name: "FolderNotes")
+// }
 
 model Profile {
   id     Int     @id @default(autoincrement())
@@ -38,9 +43,12 @@ model Profile {
 }
 
 model User {
-  id      Int      @id @default(autoincrement())
-  email   String   @unique
-  name    String?
-  posts   Note[]
-  profile Profile?
+  id        Int      @id @default(autoincrement())
+  uid       String   @unique
+  email     String   @unique
+  name      String?
+  notes     Note[]
+  profile   Profile?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }

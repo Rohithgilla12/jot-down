@@ -6,6 +6,14 @@ import { builder } from "./builder";
 
 import "./resolvers/notesResolver";
 import "./resolvers/usersResolver";
+import "./resolvers/resolver";
+
+builder.scalarType("DateTime", {
+  serialize: (date) => date.toISOString(),
+  parseValue: (date) => {
+    return new Date(date as string);
+  },
+});
 
 export const schema = builder.toSchema({});
 
