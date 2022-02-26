@@ -35,19 +35,19 @@ export const ConfirmationForm: React.FC<ConfirmationFormProps> = ({}) => {
         my={12}
       >
         <Heading lineHeight={1.1} fontSize={{ base: "2xl", md: "3xl" }}>
-          Forgot your password?
+          Confirmation Code
         </Heading>
         <Text
           fontSize={{ base: "sm", sm: "md" }}
           color={useColorModeValue("gray.800", "gray.400")}
         >
-          You&apos;ll get an email with a reset link
+          Please enter the code that you have received on your email.
         </Text>
-        <FormControl id="email">
+        <FormControl id="code">
           <Input
-            placeholder="your-email@example.com"
+            placeholder="123456"
             _placeholder={{ color: "gray.500" }}
-            type="email"
+            type="text"
           />
         </FormControl>
         <Stack spacing={6}>
@@ -58,7 +58,7 @@ export const ConfirmationForm: React.FC<ConfirmationFormProps> = ({}) => {
               bg: "blue.500",
             }}
           >
-            Request Reset
+            Confirm
           </Button>
         </Stack>
       </Stack>
