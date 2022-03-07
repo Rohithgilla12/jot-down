@@ -80,10 +80,8 @@ export default function SignUpForm() {
                   bg: "blue.500",
                 }}
                 onClick={async () => {
-                  try {
-                    await signUp(email, password);
-                    setShowConfirmation(true);
-                  } catch (e) {}
+                  await signUp(email, password);
+                  setShowConfirmation(true);
                 }}
               >
                 Sign up

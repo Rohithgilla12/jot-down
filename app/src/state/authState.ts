@@ -14,8 +14,10 @@ export const signUp = async (email: string, password: string) => {
     }
   );
   try {
-    await Auth.signIn(email, password);
-  } catch (e) {}
+    await Auth.signUp(email, password);
+  } catch (e) {
+    console.log(e);
+  }
 };
 
 export const confirmCode = async (email: string, code: string) => {
