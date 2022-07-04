@@ -1,4 +1,3 @@
-import { ViewIcon, ViewOffIcon } from "@chakra-ui/icons";
 import {
   Box,
   Button,
@@ -14,9 +13,11 @@ import {
   Text,
   useColorModeValue,
 } from "@chakra-ui/react";
-import { useAtom } from "jotai";
-import { useState } from "react";
+import { SetStateAction, useState } from "react";
+import { ViewIcon, ViewOffIcon } from "@chakra-ui/icons";
 import { showConfirmationAtom, signUp } from "../state/authState";
+
+import { useAtom } from "jotai";
 
 export default function SignUpForm() {
   const [showPassword, setShowPassword] = useState(false);
@@ -49,13 +50,20 @@ export default function SignUpForm() {
           <Stack spacing={4}>
             <FormControl id="email" isRequired>
               <FormLabel>Email address</FormLabel>
-              <Input type="email" onChange={(e) => setEmail(e.target.value)} />
+              <Input
+                type="email"
+                onChange={(e: { target: { value: SetStateAction<string> } }) =>
+                  setEmail(e.target.value)
+                }
+              />
             </FormControl>
             <FormControl id="password" isRequired>
               <FormLabel>Password</FormLabel>
               <InputGroup>
                 <Input
-                  onChange={(e) => setPassword(e.target.value)}
+                  onChange={(e: {
+                    target: { value: SetStateAction<string> };
+                  }) => setPassword(e.target.value)}
                   type={showPassword ? "text" : "password"}
                 />
                 <InputRightElement h={"full"}>

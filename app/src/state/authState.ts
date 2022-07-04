@@ -14,6 +14,7 @@ export const signUp = async (email: string, password: string) => {
     }
   );
   try {
+    console.log("signUp");
     await Auth.signUp(email, password);
   } catch (e) {
     console.log(e);

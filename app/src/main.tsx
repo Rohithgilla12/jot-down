@@ -1,12 +1,13 @@
-import { ChakraProvider } from "@chakra-ui/react";
+import "./index.css";
+
 import { Amplify } from "aws-amplify";
+import App from "./App";
+import { ChakraProvider } from "@chakra-ui/react";
 import { Provider } from "jotai";
 import React from "react";
 import ReactDOM from "react-dom";
 import { BrowserRouter as Router } from "react-router-dom";
-import App from "./App";
 import config from "./config";
-import "./index.css";
 
 Amplify.configure({
   Auth: {

@@ -1,13 +1,15 @@
 {
-  "package": {
-    "productName": "jot-down",
-    "version": "0.1.0"
-  },
+  "$schema": "../node_modules/@tauri-apps/cli/schema.json",
+
   "build": {
     "distDir": "../dist",
     "devPath": "http://localhost:3000",
     "beforeDevCommand": "yarn dev",
     "beforeBuildCommand": "yarn build"
+  },
+  "package": {
+    "productName": "jot-down",
+    "version": "0.1.0"
   },
   "tauri": {
     "bundle": {
@@ -28,13 +30,11 @@
       "shortDescription": "",
       "longDescription": "",
       "deb": {
-        "depends": [],
-        "useBootstrapper": false
+        "depends": []
       },
       "macOS": {
         "frameworks": [],
         "minimumSystemVersion": "",
-        "useBootstrapper": false,
         "exceptionDomain": "",
         "signingIdentity": null,
         "entitlements": null

@@ -4,7 +4,8 @@
 )]
 
 use tauri::{CustomMenuItem, Manager, SystemTrayEvent, SystemTrayMenu, SystemTrayMenuItem};
-use tauri_plugin_positioner::{on_tray_event, Position, Positioner, WindowExt};
+
+use tauri_plugin_positioner::{on_tray_event, Position, WindowExt};
 
 fn main() {
   // let quit = CustomMenuItem::new("quit".to_string(), "Quit");
@@ -17,10 +18,16 @@ fn main() {
   //   .add_item(quit);
 
   let system_tray = tauri::SystemTray::new(); //.with_menu(tray_menu)
+  let context = tauri::generate_context!();
 
   tauri::Builder::default()
     .system_tray(system_tray)
-    .plugin(Positioner::default())
+    .menu(if cfg!(target_os = "macos") {
+      tauri::Menu::os_default(&context.package_info().name)
+    } else {
+      tauri::Menu::default()
+    })
+    .plugin(tauri_plugin_positioner::init())
     .setup(|app| {
       let win = app.get_window("main").unwrap();
       let _ = win.set_decorations(false);
@@ -52,6 +59,6 @@ fn main() {
         }
       }
     })
-    .run(tauri::generate_context!())
+    .run(context)
     .expect("error while running tauri application");
 }
