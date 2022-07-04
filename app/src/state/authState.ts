@@ -24,5 +24,7 @@ export const signUp = async (email: string, password: string) => {
 export const confirmCode = async (email: string, code: string) => {
   try {
     await Auth.confirmSignUp(email, code);
-  } catch (e) {}
+  } catch (e) {
+    console.error(e);
+  }
 };

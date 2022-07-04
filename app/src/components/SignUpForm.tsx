@@ -89,6 +89,7 @@ export default function SignUpForm() {
                 }}
                 onClick={async () => {
                   await signUp(email, password);
+                  //todo: do error checking and then move to the next page
                   setShowConfirmation(true);
                 }}
               >

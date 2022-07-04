@@ -1,28 +1,29 @@
-import { ReactNode } from "react";
 import {
-  Box,
-  Flex,
   Avatar,
+  Box,
+  Button,
+  Flex,
   HStack,
   IconButton,
-  Button,
   Menu,
   MenuButton,
-  MenuList,
-  MenuItem,
   MenuDivider,
-  useDisclosure,
-  useColorModeValue,
+  MenuItem,
+  MenuList,
   Stack,
+  useColorModeValue,
+  useDisclosure,
 } from "@chakra-ui/react";
-import { HamburgerIcon, CloseIcon } from "@chakra-ui/icons";
-import { LinkType } from "../types/LinkType";
-import { useAtom } from "jotai";
-import { authenticatedAtom } from "../state/authState";
+import { CloseIcon, HamburgerIcon } from "@chakra-ui/icons";
+
 import { Link } from "react-router-dom";
+import { LinkType } from "../types/LinkType";
+import { ReactNode } from "react";
+import { authenticatedAtom } from "../state/authState";
+import { useAtom } from "jotai";
 const Links: Array<LinkType> = [
-  { name: "Sign In", link: "/sign_up" },
-  { name: "Sign Up", link: "/sign_in" },
+  { name: "Sign Up", link: "/sign_up" },
+  { name: "Sign In", link: "/sign_in" },
 ];
 
 const NavLink = ({ children, link }: { children: ReactNode; link: string }) => (
