@@ -19,8 +19,9 @@ import { CloseIcon, HamburgerIcon } from "@chakra-ui/icons";
 import { Link } from "react-router-dom";
 import { LinkType } from "../types/LinkType";
 import { ReactNode } from "react";
-import { authenticatedAtom } from "../state/authState";
-import { useAtom } from "jotai";
+import { isAuthenticated } from "../state/authSlice";
+import { useAppSelector } from "../state/store";
+
 const Links: Array<LinkType> = [
   { name: "Sign Up", link: "/sign_up" },
   { name: "Sign In", link: "/sign_in" },
@@ -45,8 +46,8 @@ const NavLink = ({ children, link }: { children: ReactNode; link: string }) => (
 
 export default function Navigation() {
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const [authenticated, _] = useAtom(authenticatedAtom);
 
+  const authenticated = useAppSelector(isAuthenticated);
   return (
     <>
       <Box bg={useColorModeValue("gray.100", "gray.900")} px={4}>
@@ -65,11 +66,12 @@ export default function Navigation() {
               spacing={4}
               display={{ base: "none", md: "flex" }}
             >
-              {Links.map((link) => (
-                <NavLink key={link.name} link={link.link}>
-                  {link.name}
-                </NavLink>
-              ))}
+              {!authenticated &&
+                Links.map((link) => (
+                  <NavLink key={link.name} link={link.link}>
+                    {link.name}
+                  </NavLink>
+                ))}
             </HStack>
           </HStack>
           {authenticated && (
@@ -103,11 +105,12 @@ export default function Navigation() {
         {isOpen ? (
           <Box pb={4} display={{ md: "none" }}>
             <Stack as={"nav"} spacing={4}>
-              {Links.map((link) => (
-                <NavLink key={link.name} link={link.link}>
-                  {link.name}
-                </NavLink>
-              ))}
+              {!authenticated &&
+                Links.map((link) => (
+                  <NavLink key={link.name} link={link.link}>
+                    {link.name}
+                  </NavLink>
+                ))}
             </Stack>
           </Box>
         ) : null}

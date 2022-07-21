@@ -12,8 +12,14 @@ import {
   Text,
   useColorModeValue,
 } from "@chakra-ui/react";
+import { setEmail, setPassword, signIn } from "../state/authSlice";
+
+import { SetStateAction } from "react";
+import { useAppDispatch } from "../state/store";
 
 export default function SignInForm() {
+  const dispatch = useAppDispatch();
+
   return (
     <Flex
       minH={"100vh"}
@@ -37,11 +43,21 @@ export default function SignInForm() {
           <Stack spacing={4}>
             <FormControl id="email">
               <FormLabel>Email address</FormLabel>
-              <Input type="email" />
+              <Input
+                type="email"
+                onChange={(e: { target: { value: SetStateAction<string> } }) =>
+                  dispatch(setEmail(e.target.value as string))
+                }
+              />
             </FormControl>
             <FormControl id="password">
               <FormLabel>Password</FormLabel>
-              <Input type="password" />
+              <Input
+                onChange={(e: { target: { value: SetStateAction<string> } }) =>
+                  dispatch(setPassword(e.target.value as string))
+                }
+                type="password"
+              />
             </FormControl>
             <Stack spacing={10}>
               <Stack
@@ -57,6 +73,9 @@ export default function SignInForm() {
                 color={"white"}
                 _hover={{
                   bg: "blue.500",
+                }}
+                onClick={() => {
+                  dispatch(signIn());
                 }}
               >
                 Sign in

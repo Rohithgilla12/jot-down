@@ -15,15 +15,13 @@ import {
 } from "@chakra-ui/react";
 import { SetStateAction, useState } from "react";
 import { ViewIcon, ViewOffIcon } from "@chakra-ui/icons";
-import { showConfirmationAtom, signUp } from "../state/authState";
+import { setEmail, setPassword, signUp } from "../state/authSlice";
 
-import { useAtom } from "jotai";
+import { useAppDispatch } from "../state/store";
 
 export default function SignUpForm() {
   const [showPassword, setShowPassword] = useState(false);
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [_, setShowConfirmation] = useAtom(showConfirmationAtom);
+  const dispatch = useAppDispatch();
 
   return (
     <Flex
@@ -53,7 +51,7 @@ export default function SignUpForm() {
               <Input
                 type="email"
                 onChange={(e: { target: { value: SetStateAction<string> } }) =>
-                  setEmail(e.target.value)
+                  dispatch(setEmail(e.target.value as string))
                 }
               />
             </FormControl>
@@ -63,7 +61,7 @@ export default function SignUpForm() {
                 <Input
                   onChange={(e: {
                     target: { value: SetStateAction<string> };
-                  }) => setPassword(e.target.value)}
+                  }) => dispatch(setPassword(e.target.value as string))}
                   type={showPassword ? "text" : "password"}
                 />
                 <InputRightElement h={"full"}>
@@ -87,10 +85,8 @@ export default function SignUpForm() {
                 _hover={{
                   bg: "blue.500",
                 }}
-                onClick={async () => {
-                  await signUp(email, password);
-                  //todo: do error checking and then move to the next page
-                  setShowConfirmation(true);
+                onClick={() => {
+                  dispatch(signUp());
                 }}
               >
                 Sign up

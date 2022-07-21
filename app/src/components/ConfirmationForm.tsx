@@ -9,8 +9,9 @@ import {
   useColorModeValue,
 } from "@chakra-ui/react";
 import React, { SetStateAction, useState } from "react";
+import { confirmCode, setOtpCode } from "../state/authSlice";
 
-import { confirmCode } from "../state/authState";
+import { useAppDispatch } from "../state/store";
 
 interface ConfirmationFormProps {}
 
@@ -19,7 +20,7 @@ type ForgotPasswordFormInputs = {
 };
 
 export const ConfirmationForm: React.FC<ConfirmationFormProps> = ({}) => {
-  const [code, setCode] = useState("");
+  const dispatch = useAppDispatch();
   return (
     <Flex
       minH={"100vh"}
@@ -52,14 +53,14 @@ export const ConfirmationForm: React.FC<ConfirmationFormProps> = ({}) => {
             _placeholder={{ color: "gray.500" }}
             type="text"
             onChange={(e: { target: { value: SetStateAction<string> } }) =>
-              setCode(e.target.value)
+              dispatch(setOtpCode(e.target.value as string))
             }
           />
         </FormControl>
         <Stack spacing={6}>
           <Button
-            onClick={async () => {
-              await confirmCode("gillarohith+test@gmail.com", code);
+            onClick={() => {
+              dispatch(confirmCode());
             }}
             bg={"blue.400"}
             color={"white"}

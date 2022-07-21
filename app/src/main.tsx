@@ -3,11 +3,12 @@ import "./index.css";
 import { Amplify } from "aws-amplify";
 import App from "./App";
 import { ChakraProvider } from "@chakra-ui/react";
-import { Provider } from "jotai";
+import { Provider } from "react-redux";
 import React from "react";
 import ReactDOM from "react-dom";
 import { BrowserRouter as Router } from "react-router-dom";
 import config from "./config";
+import { store } from "./state/store";
 
 Amplify.configure({
   Auth: {
@@ -37,7 +38,7 @@ ReactDOM.render(
   <React.StrictMode>
     <ChakraProvider>
       <Router>
-        <Provider>
+        <Provider store={store}>
           <App />
         </Provider>
       </Router>

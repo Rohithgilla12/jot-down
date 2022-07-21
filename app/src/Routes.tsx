@@ -1,4 +1,6 @@
 import { Route, Switch } from "react-router";
+
+import { Home } from "./pages/Home";
 import { SignIn } from "./pages/SignIn";
 import { SignUp } from "./pages/SignUp";
 
@@ -17,7 +19,3 @@ export const Routes = () => {
     </Switch>
   );
 };
-
-function Home() {
-  return <h2>Home</h2>;
-}
