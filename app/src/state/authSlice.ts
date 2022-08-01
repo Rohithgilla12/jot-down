@@ -9,6 +9,7 @@ export interface AuthState {
   password?: string;
   otpCode?: string;
   authenticated: boolean;
+  uid?: string;
   showConfirmationScreen: boolean;
 }
 
@@ -23,6 +24,9 @@ export const authSlice = createSlice({
   reducers: {
     setEmail: (state: AuthState, action: PayloadAction<string>) => {
       state.email = action.payload;
+    },
+    setUid: (state: AuthState, action: PayloadAction<string>) => {
+      state.uid = action.payload;
     },
     setPassword: (state: AuthState, action: PayloadAction<string>) => {
       state.password = action.payload;
@@ -89,6 +93,7 @@ export const {
   setOtpCode,
   setAuthenticated,
   setShowConfirmationScreen,
+  setUid,
 } = authSlice.actions;
 
 export const showConfirmationScreen = (state: RootState) =>

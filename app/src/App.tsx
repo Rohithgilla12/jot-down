@@ -1,6 +1,6 @@
 import "./App.css";
 
-import { isAuthenticated, setAuthenticated } from "./state/authSlice";
+import { isAuthenticated, setAuthenticated, setUid } from "./state/authSlice";
 import { useAppDispatch, useAppSelector } from "./state/store";
 
 import { Auth } from "aws-amplify";
@@ -20,8 +20,10 @@ export default function App() {
 
   async function onLoad() {
     try {
-      const user = await Auth.currentSession();
+      await Auth.currentSession();
+      const user = await Auth.currentAuthenticatedUser();
       console.log(user);
+      // dispatch(setUid(user.getIdToken().))
       dispatch(setAuthenticated(true));
       history.push("/");
     } catch (e) {
